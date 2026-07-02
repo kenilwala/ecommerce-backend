@@ -91,4 +91,23 @@ public class ProductServiceImpl implements ProductService {
                 product.getActive()
         );
     }
+
+    @Override
+    public ProductResponse getProductByName(String name) {
+
+        Product product = productRepository.findByName(name)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Product not found with name: " + name));
+
+        return mapToResponse(product);
+    }
+
+    @Override
+    public List<ProductResponse> searchProducts(String keyword) {
+
+        return productRepository.findByNameContainingIgnoreCase(keyword)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
 }

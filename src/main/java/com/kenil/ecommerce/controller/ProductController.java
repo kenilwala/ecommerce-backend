@@ -46,8 +46,18 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
-
         productService.deleteProduct(id);
     }
 
+    @GetMapping("/name/{name}")
+    public ProductResponse getProductByName(@PathVariable String name) {
+        return productService.getProductByName(name);
+    }
+
+    @GetMapping("/search")
+    public List<ProductResponse> searchProducts(
+            @RequestParam String keyword) {
+
+        return productService.searchProducts(keyword);
+    }
 }
